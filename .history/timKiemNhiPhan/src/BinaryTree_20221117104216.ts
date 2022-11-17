@@ -1,0 +1,56 @@
+import {Tree} from "../interface/Tree";
+import {TreeNode} from "./TreeNode";
+
+export class BinaryTree<E> implements Tree<E>{
+    root: TreeNode<E> | null;
+    totalNode: number;
+
+    constructor() {
+        this.root = null;
+        this.totalNode = 0;
+    }
+
+    getSize(): number {
+        
+    }
+
+    inorder(node: TreeNode<E>): void {
+    }
+
+    insert(data: E): TreeNode<E> {
+        if (!this.root) {
+            this.root = new TreeNode<E>(data);
+            this.totalNode++;
+            return this.root;
+        } else {
+            let node = new TreeNode<E>(data);
+            let currentNode = this.root;
+    
+            while (currentNode) {
+                /* so sánh giá trị currentNode với data */
+                if (data < currentNode.data) {
+                    /* nếu currentNode không có phần tử bên trái thì gán bên trái của
+                        currentNode bằng node cần thêm
+                     */
+                    if (!currentNode.left) {
+                        currentNode.left = node;
+                        break;
+                    }
+                    /* gán lại currentNode cho node bên trái */
+                    currentNode = currentNode.left;
+    
+                } else if (data > currentNode.data) {
+                    if (!currentNode.right) {
+                        currentNode.right = node;
+                        break;
+                    }
+                    /* gán lại currentNode cho node bên phải */
+                    currentNode = currentNode.right;
+                }
+            }
+            this.totalNode++;
+            return currentNode;
+        }
+    }
+
+}
